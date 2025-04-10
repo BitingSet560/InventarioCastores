@@ -1,0 +1,20 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
+<head>
+    <title>Inicio</title>
+</head>
+<body>
+    <h2>Bienvenido, ${usuario.nombre}</h2>
+
+    <form action="/productos" method="get">
+        <button type="submit">Módulo 1</button>
+    </form>
+    <form action="/salidas" method="get">
+        <button type="submit">Módulo 2</button>
+    </form>
+    <form action="modulo3" method="get">
+        <button type="submit">Módulo 3</button>
+    </form>
+</body>
+</html>
