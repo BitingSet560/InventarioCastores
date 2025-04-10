@@ -8,13 +8,13 @@
     <h2>Bienvenido, ${usuario.nombre}</h2>
 
     <form action="/productos" method="get">
-        <button type="submit">Módulo 1</button>
+        <button type="submit">Entradas</button>
     </form>
     <form action="/salidas" method="get">
-        <button type="submit">Módulo 2</button>
+        <button type="submit">Salidas</button>
     </form>
     <form action="modulo3" method="get">
-        <button type="submit">Módulo 3</button>
+        <button type="submit">Historial</button>
     </form>
 </body>
 </html>

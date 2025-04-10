@@ -44,7 +44,7 @@ public class ProductoController {
             if(cantidad > cantidadStock){
                 producto.setCantidad(cantidad);
                 productoRepository.save(producto);
-                redirectAttributes.addFlashAttribute("mensaje", "✅ Stock actualizado correctamente.");
+                redirectAttributes.addFlashAttribute("mensaje", "Stock actualizado correctamente.");
             }
             else{
                 redirectAttributes.addFlashAttribute("mensaje", "No puede ingresar un numero menor al stock actual.");
@@ -54,6 +54,32 @@ public class ProductoController {
         }
 
         return "redirect:/productos";
+    }
+
+    @PostMapping("/restarStock")
+    public String restarStock(
+            @RequestParam("idProducto") Integer idProducto,
+            @RequestParam("cantidad") Integer cantidad,
+            RedirectAttributes redirectAttributes)  {
+
+        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
+
+        if (optionalProducto.isPresent()) {
+            Producto producto = optionalProducto.get();
+            int cantidadStock = producto.getCantidad();
+            if(cantidad <= cantidadStock){
+                producto.setCantidad(producto.getCantidad() - cantidad);
+                productoRepository.save(producto);
+                redirectAttributes.addFlashAttribute("mensaje", "Stock actualizado correctamente.");
+            }
+            else{
+                redirectAttributes.addFlashAttribute("mensaje", "No puede sacar una cantidad mayor al stock del producto.");
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
+        }
+
+        return "redirect:/salidas";
     }
 
     @PostMapping("/activarDesactivarProducto")
