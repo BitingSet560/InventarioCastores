@@ -1,0 +1,50 @@
+package com.examen.model;
+import jakarta.persistence.*;
+
+
+@Entity
+@Table(name = "Movimientos", schema = "dbo")
+public class Movimiento {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idMovimiento")
+    private Integer id;
+
+    @Column(nullable = false, length = 30, name = "Nombre")
+    private String nombre;
+
+    @Column(nullable = false, name = "estatus")
+    private Boolean estatus;
+
+    public Integer getId(Integer id){
+        return this.id;
+    }
+
+    public Movimiento() {}
+
+    // Getters y setters
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Boolean getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(Boolean estatus) {
+        this.estatus = estatus;
+    }
+}

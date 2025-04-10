@@ -20,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 @Controller
-public class ProductoController {
+public class SalidasController {
+
     @Autowired
     private ProductoRepository productoRepository;
     @Autowired
@@ -29,15 +31,15 @@ public class ProductoController {
     @Autowired
     private MovimientoRepository movimientoRepository;
 
-    @GetMapping("/productos")
-    public String mostrarProductos(Model model) {
-        List<Producto> lista = productoRepository.findAll();
+    @GetMapping("/salidas")
+    public String mostrarProductosActivos(Model model) {
+        List<Producto> lista = productoRepository.findByEstatusTrue();
         model.addAttribute("productos", lista);
-        return "productos"; 
+        return "salidas"; 
     }
 
-    @PostMapping("/agregarStock")
-    public String agregarStock(
+    @PostMapping("/restarStock")
+    public String restarStock(
             @RequestParam("idProducto") Integer idProducto,
             @RequestParam("cantidad") Integer cantidad,
             HttpSession session,
@@ -49,9 +51,8 @@ public class ProductoController {
         if (optionalProducto.isPresent()) {
             Producto producto = optionalProducto.get();
             int cantidadStock = producto.getCantidad();
-            if(cantidad > cantidadStock){
-                //Actualizar la cantidad
-                producto.setCantidad(cantidad);
+            if(cantidad <= cantidadStock){
+                producto.setCantidad(producto.getCantidad() - cantidad);
                 productoRepository.save(producto);
 
                 // Guardar en el histórico
@@ -59,7 +60,7 @@ public class ProductoController {
                 h.setUsuario(usuario);
                 h.setProducto(producto);
 
-                Movimiento movimiento = movimientoRepository.findById(1).orElse(null);
+                Movimiento movimiento = movimientoRepository.findById(2).orElse(null);
                 h.setMovimiento(movimiento);
                 h.setCantidad(cantidad);
                 h.setFecha(LocalDateTime.now());
@@ -69,33 +70,12 @@ public class ProductoController {
                 redirectAttributes.addFlashAttribute("mensaje", "Stock actualizado correctamente.");
             }
             else{
-                redirectAttributes.addFlashAttribute("mensaje", "No puede ingresar un numero menor al stock actual.");
+                redirectAttributes.addFlashAttribute("mensaje", "No puede sacar una cantidad mayor al stock del producto.");
             }
         } else {
             redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
         }
 
-        return "redirect:/productos";
-    }
-
-
-    @PostMapping("/activarDesactivarProducto")
-    public String activarDesactivarProducto(
-            @RequestParam("idProducto") Integer idProducto,
-            RedirectAttributes redirectAttributes) 
-    {
-        Optional<Producto> optionalProducto = productoRepository.findById(idProducto);
-        if (optionalProducto.isPresent()) {
-            Producto producto = optionalProducto.get();
-            Boolean estatus = producto.getEstatus();
-            producto.setEstatus(!estatus);
-            productoRepository.save(producto);
-            redirectAttributes.addFlashAttribute("mensaje", "✅ Estatus actualizado correctamente.");
-        }
-        else {
-            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
-        }
-
-        return "redirect:/productos";
+        return "redirect:/salidas";
     }
 }

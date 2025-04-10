@@ -6,15 +6,20 @@
 </head>
 <body>
     <h2>Bienvenido, ${usuario.nombre}</h2>
-
     <form action="/productos" method="get">
         <button type="submit">Entradas</button>
     </form>
-    <form action="/salidas" method="get">
-        <button type="submit">Salidas</button>
-    </form>
-    <form action="modulo3" method="get">
-        <button type="submit">Historial</button>
-    </form>
+
+    <c:if test="${usuario.idRol == 2}">
+        <form action="/salidas" method="get">
+            <button type="submit">Salidas</button>
+        </form>
+    </c:if>
+
+    <c:if test="${usuario.idRol == 1}">
+        <form action="/historico" method="get">
+            <button type="submit">Historial</button>
+        </form>
+    </c:if>
 </body>
 </html>
