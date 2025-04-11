@@ -17,8 +17,9 @@ public class HomeController {
     if (usuario == null) {
         return "redirect:/";
     }
-    
-    model.addAttribute("usuario", usuario);
-    return "home";
+    model.addAttribute("titulo", "Inicio");
+    model.addAttribute("contenido", "home.jsp");
+    model.addAttribute("usuario", session.getAttribute("usuario"));
+    return "layout";
 }
 }

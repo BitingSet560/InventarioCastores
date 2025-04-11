@@ -15,7 +15,7 @@ public class LoginController {
     @Autowired
     private UsuarioRepository usuarioRepositorio;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String mostrarLogin() {
         return "login";
     }
@@ -37,5 +37,11 @@ public class LoginController {
             model.addAttribute("error", "Credenciales inválidas o usuario inactivo");
             return "login";
         }
+    }
+
+    @PostMapping("/logout")
+    public String cerrarSesion(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }
