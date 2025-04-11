@@ -30,10 +30,13 @@ public class ProductoController {
     private MovimientoRepository movimientoRepository;
 
     @GetMapping("/productos")
-    public String mostrarProductos(Model model) {
+    public String mostrarProductos( Model model,
+                                    HttpSession session) {
         List<Producto> lista = productoRepository.findAll();
+        model.addAttribute("titulo", "Producttos");
+        model.addAttribute("contenido", "productos.jsp");
         model.addAttribute("productos", lista);
-        return "productos"; 
+        return "layout"; 
     }
 
     @PostMapping("/agregarStock")
@@ -66,13 +69,13 @@ public class ProductoController {
 
                 historicoRepository.save(h);
 
-                redirectAttributes.addFlashAttribute("mensaje", "Stock actualizado correctamente.");
+                redirectAttributes.addFlashAttribute("mensaje", "✅ Stock actualizado correctamente.");
             }
             else{
-                redirectAttributes.addFlashAttribute("mensaje", "No puede ingresar un numero menor al stock actual.");
+                redirectAttributes.addFlashAttribute("mensaje", "❌ No puede ingresar un numero menor al stock actual.");
             }
         } else {
-            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
+            redirectAttributes.addFlashAttribute("error", " ❌ Producto no encontrado.");
         }
 
         return "redirect:/productos";
@@ -93,7 +96,7 @@ public class ProductoController {
             redirectAttributes.addFlashAttribute("mensaje", "✅ Estatus actualizado correctamente.");
         }
         else {
-            redirectAttributes.addFlashAttribute("error", "Producto no encontrado.");
+            redirectAttributes.addFlashAttribute("error", "❌ Producto no encontrado.");
         }
 
         return "redirect:/productos";

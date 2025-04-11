@@ -29,7 +29,10 @@ public class LoginController {
         Usuario usuario = usuarioRepositorio.findByCorreo(correo);
         if (usuario != null && usuario.getContrasena().equals(contrasena) && usuario.getEstatus()) {
             session.setAttribute("usuario", usuario);
-            return "redirect:/home"; 
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("titulo", "Inicio");
+            model.addAttribute("contenido", "home.jsp");
+            return "layout"; 
         } else {
             model.addAttribute("error", "Credenciales inválidas o usuario inactivo");
             return "login";
