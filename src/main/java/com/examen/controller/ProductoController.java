@@ -101,4 +101,17 @@ public class ProductoController {
 
         return "redirect:/productos";
     }
+
+    @PostMapping("/agregarProducto")
+    public String agregarProducto(@RequestParam String nombre, @RequestParam int cantidad, Model model) {
+        Producto producto = new Producto();
+        producto.setNombre(nombre);
+        producto.setCantidad(cantidad);
+        producto.setEstatus(true); 
+        productoRepository.save(producto);
+        
+        model.addAttribute("mensaje", "✅ Producto agregado correctamente.");
+        
+        return "redirect:/productos";
+    }
 }

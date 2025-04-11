@@ -34,8 +34,10 @@ public class SalidasController {
     @GetMapping("/salidas")
     public String mostrarProductosActivos(Model model) {
         List<Producto> lista = productoRepository.findByEstatusTrue();
+        model.addAttribute("titulo", "Salidas");
+        model.addAttribute("contenido", "salidas.jsp");
         model.addAttribute("productos", lista);
-        return "salidas"; 
+        return "layout"; 
     }
 
     @PostMapping("/restarStock")
