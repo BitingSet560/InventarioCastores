@@ -27,10 +27,6 @@
                         <label for="nombre" class="form-label">Nombre del Producto</label>
                         <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del Producto" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="cantidad" class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad del Producto" required>
-                    </div>
                     <button type="submit" class="btn btn-success">Agregar Producto</button>
                 </form>
             </div>

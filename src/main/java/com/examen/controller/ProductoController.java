@@ -103,10 +103,10 @@ public class ProductoController {
     }
 
     @PostMapping("/agregarProducto")
-    public String agregarProducto(@RequestParam String nombre, @RequestParam int cantidad, Model model) {
+    public String agregarProducto(@RequestParam String nombre,  Model model) {
         Producto producto = new Producto();
         producto.setNombre(nombre);
-        producto.setCantidad(cantidad);
+        producto.setCantidad(0);
         producto.setEstatus(true); 
         productoRepository.save(producto);
         

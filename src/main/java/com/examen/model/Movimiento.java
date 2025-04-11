@@ -9,7 +9,7 @@ public class Movimiento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idMovimiento")
-    private Integer id;
+    private Byte id;
 
     @Column(nullable = false, length = 30, name = "Nombre")
     private String nombre;
@@ -17,18 +17,18 @@ public class Movimiento {
     @Column(nullable = false, name = "estatus")
     private Boolean estatus;
 
-    public Integer getId(Integer id){
+    public Byte getId(Integer id){
         return this.id;
     }
 
     public Movimiento() {}
 
     // Getters y setters
-    public Integer getId() {
+    public Byte getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Byte id) {
         this.id = id;
     }
 
